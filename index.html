@@ -106,7 +106,7 @@
     </div>
 
     <!-- RESTAURADO: El barco distante original en su capa de parallax -->
-    <div class="distant-boat" style="position:absolute;bottom:32%;left:-110px;z-index:22;pointer-events:none;animation:boatsail 82s -35s linear infinite,bob2 6s ease-in-out infinite">
+    <div class="distant-boat" style="position:absolute;bottom:32%;left:-110px;z-index:22;pointer-events:none;animation:boatsail 140s -35s linear infinite,bob2 6s ease-in-out infinite">
       <svg width="66" height="60" viewBox="0 0 66 60" style="display:block;overflow:visible;opacity:.7;filter:drop-shadow(0 2px 3px rgba(0,0,0,.55))">
         <path d="M4,38 Q33,31 62,38 L58,50 Q33,55 8,50Z" fill="#060f1c"/>
         <line x1="33" y1="38" x2="33" y2="-2" stroke="#060f1c" stroke-width="2"/>
@@ -164,7 +164,7 @@
   </div>
 
   <!-- RESTAURADO: Barco principal pequeño en primer plano -->
-  <div id="main-boat" class="main-boat" style="position:absolute;bottom:32vh;left:-200px;z-index:45;pointer-events:none;animation:boatsail 56s linear infinite,bob 4.5s ease-in-out infinite">
+  <div id="main-boat" class="main-boat" style="position:absolute;bottom:32vh;left:-200px;z-index:45;pointer-events:none;animation:boatsail 110s linear infinite,bob 4.5s ease-in-out infinite">
     <svg width="120" height="108" viewBox="0 0 120 108" style="display:block;overflow:visible;filter:drop-shadow(0 6px 8px rgba(0,0,0,.55))">
       <ellipse cx="60" cy="92" rx="54" ry="6" fill="rgba(0,0,0,.35)"/>
       <path d="M8,70 Q60,58 112,70 L104,88 Q60,96 16,88Z" fill="#060f1c"/>
@@ -564,14 +564,16 @@ function spawnShoot(){
   const dur=(Math.random()*6+12).toFixed(1);
   el.style.animationDuration=dur+'s';
 
-  const numParticles = Math.floor(Math.random() * 6) + 8;
+  const numParticles = Math.floor(Math.random() * 10) + 14;
   for(let i=0; i<numParticles; i++) {
      const dust = document.createElement('div');
      dust.className = 'sh-dust';
+     const sz = (Math.random() * 2.5 + 1).toFixed(1);
      dust.style.setProperty('--rx', Math.random().toFixed(2));
      dust.style.setProperty('--ry', (Math.random() * 2 - 1).toFixed(2));
-     dust.style.animationDuration = (Math.random() * 1.5 + 0.8) + 's';
-     dust.style.animationDelay = (Math.random() * (dur * 0.6)) + 's';
+     dust.style.setProperty('--sz', sz + 'px');
+     dust.style.animationDuration = (Math.random() * 2 + 1.2).toFixed(1) + 's';
+     dust.style.animationDelay = (Math.random() * (dur * 0.65)).toFixed(1) + 's';
      el.appendChild(dust);
   }
 

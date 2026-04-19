@@ -201,3 +201,40 @@
 
 /* ============ SCENE TRANSITION ============ */
 #scene { transition: background 1.6s ease; }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 640px) {
+  #story { -webkit-overflow-scrolling: touch; }
+
+  .chapter {
+    padding: 8vh 6vw;
+    justify-content: flex-end;
+    padding-bottom: 12vh;
+  }
+
+  #hero { justify-content: center; padding-top: 40vh; }
+
+  #hero h1 { font-size: clamp(44px, 12vw, 72px); }
+
+  .chapter h2 { font-size: clamp(32px, 9vw, 56px); }
+
+  .chapter p { font-size: 15px; max-width: 100%; }
+
+  .projects {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .project { padding: 14px 16px; }
+
+  .signal { gap: 8px; margin-top: 20px; }
+  .signal a { font-size: 17px; }
+
+  .scroll-hint { bottom: 28px; font-size: 8px; }
+}
+
+@media (max-width: 480px) {
+  #hero h1 { font-size: clamp(38px, 11vw, 56px); }
+  .chapter h2 { font-size: clamp(28px, 8vw, 44px); }
+}

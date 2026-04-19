@@ -60,20 +60,20 @@
 
 .m-star-head {
   position:absolute;
-  width:36px; height:36px;
-  margin-left:-18px; margin-top:-18px;
-  background:#fff;
+  width:32px; height:32px;
+  margin-left:-16px; margin-top:-16px;
+  background:#fff8c0;
   clip-path:polygon(50% 0%, 55% 45%, 100% 50%, 55% 55%, 50% 100%, 45% 55%, 0% 50%, 45% 45%);
-  filter:drop-shadow(0 0 10px #4ac8f5) drop-shadow(0 0 20px #15365e);
+  filter:drop-shadow(0 0 8px #f9d949) drop-shadow(0 0 18px rgba(249,200,80,0.9));
   pointer-events:none;
   animation:m-spin 3s linear infinite;
 }
 
 .m-star-glow {
   position:absolute;
-  width:120px; height:120px;
-  margin-left:-60px; margin-top:-60px;
-  background:radial-gradient(circle, rgba(74,200,245,0.4) 0%, rgba(21,54,94,0.1) 40%, transparent 70%);
+  width:100px; height:100px;
+  margin-left:-50px; margin-top:-50px;
+  background:radial-gradient(circle, rgba(249,217,73,0.35) 0%, rgba(249,180,50,0.08) 45%, transparent 70%);
   border-radius:50%;
   pointer-events:none;
 }
@@ -84,13 +84,13 @@
   animation:m-fade forwards;
 }
 .m-part.star {
-  background:#fff;
+  background:#fff8c0;
   clip-path:polygon(50% 0%, 55% 45%, 100% 50%, 55% 55%, 50% 100%, 45% 55%, 0% 50%, 45% 45%);
 }
 .m-part.dot {
-  background:#fff;
+  background:#ffe87a;
   border-radius:50%;
-  box-shadow:0 0 6px #4ac8f5, 0 0 12px #fff;
+  box-shadow:0 0 5px #f9d949, 0 0 10px rgba(255,255,200,0.6);
 }
 
 @keyframes m-spin { 100% { transform: rotate(360deg); } }

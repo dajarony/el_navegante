@@ -1,0 +1,261 @@
+/* ============ SCENE ============ */
+#scene{
+  position:fixed;inset:0;
+  overflow:hidden;
+  background:
+    radial-gradient(ellipse 80% 60% at 52% 4%, #15365e 0%, #0c2343 28%, #071630 55%, #030c1c 100%),
+    #020b18;
+}
+
+/* Subtle nebula/haze bands */
+.nebula{position:absolute;inset:0;pointer-events:none;z-index:1;mix-blend-mode:screen;opacity:.35}
+.nebula.n1{background:radial-gradient(ellipse 55% 30% at 30% 18%, rgba(70,120,200,.25), transparent 60%)}
+.nebula.n2{background:radial-gradient(ellipse 40% 22% at 78% 12%, rgba(180,160,90,.12), transparent 65%)}
+
+/* Global grain / paper fiber overlay */
+#grain{
+  position:absolute;inset:0;pointer-events:none;z-index:999;
+  opacity:.18;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.92  0 0 0 0 0.88  0 0 0 0 0.78  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+/* Deep vignette */
+#vignette{
+  position:absolute;inset:0;pointer-events:none;z-index:998;
+  background:radial-gradient(ellipse 120% 90% at 50% 50%, transparent 40%, rgba(0,0,0,.45) 85%, rgba(0,0,0,.75) 100%);
+}
+
+/* ============ AURORA ============ */
+.aur{position:absolute;top:-4%;width:180px;height:62%;border-radius:50%;opacity:0;
+  background:linear-gradient(to bottom,transparent,rgba(105,180,212,.09),rgba(120,80,200,.06),transparent);
+  animation:aurb 14s ease-in-out infinite;transform-origin:top center;pointer-events:none;
+  filter:blur(18px);z-index:2}
+@keyframes aurb{0%,100%{opacity:0;transform:skewX(-7deg) scaleX(.75)}30%{opacity:1}50%{opacity:.8;transform:skewX(6deg) scaleX(1.25)}80%{opacity:.2}}
+
+/* ============ MOON ============ */
+#mw{position:absolute;top:8%;left:58%;width:96px;height:96px;display:flex;align-items:center;justify-content:center;z-index:4}
+.hl{position:absolute;border-radius:50%;border:1px solid rgba(249,217,73,.07);animation:hlp 5s ease-in-out infinite}
+@keyframes hlp{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.05);opacity:.5}}
+#moon{
+  width:96px;height:96px;border-radius:50%;background:#f6deaa;
+  box-shadow:
+    inset -18px -12px 0 2px #f4d690,
+    inset -26px -18px 2px 0 rgba(190,150,60,.35),
+    0 0 28px rgba(249,217,73,.28),
+    0 0 70px rgba(249,217,73,.12);
+  position:relative;
+  animation:mglow 7s ease-in-out infinite;
+}
+#moon::before,#moon::after{
+  content:"";position:absolute;border-radius:50%;background:rgba(175,140,70,.22);
+}
+#moon::before{width:12px;height:12px;top:28%;left:24%;box-shadow:22px 10px 0 -2px rgba(175,140,70,.18), 6px 40px 0 -3px rgba(175,140,70,.2)}
+#moon::after{width:6px;height:6px;top:58%;left:42%;box-shadow:14px -8px 0 -1px rgba(175,140,70,.16), -12px 6px 0 -2px rgba(175,140,70,.14)}
+@keyframes mglow{0%,100%{filter:brightness(1)}50%{filter:brightness(1.08)}}
+
+/* ============ STARS ============ */
+#stc{position:absolute;inset:0;pointer-events:none;z-index:3}
+
+/* ============ SHOOTING STARS (Física de Desgaste Térmico Delicado) ============ */
+#shs{position:absolute;inset:0;z-index:5;pointer-events:none}
+
+.sh{
+  position:absolute;
+  height:2px;
+  opacity:0;
+  background:linear-gradient(to left, rgba(255,255,255,1) 0%, rgba(249,217,73,0.9) 15%, transparent 100%);
+  pointer-events:none;
+  animation:sha linear forwards;
+  border-radius:2px;
+  box-shadow: 0 0 4px rgba(255,255,255,0.8), 0 0 8px rgba(249,217,73,0.5);
+}
+.sh::before{
+  content:""; position:absolute; right:-6px; top:50%; width:16px; height:16px; margin-top:-8px;
+  background:rgba(249,217,73,0.8);
+  clip-path:polygon(50% 0%, 55% 45%, 100% 50%, 55% 55%, 50% 100%, 45% 55%, 0% 50%, 45% 45%);
+  filter:drop-shadow(0 0 6px rgba(249,217,73,1));
+}
+.sh::after{
+  content:"";position:absolute;right:0;top:50%;width:4px;height:4px;margin-top:-2px;
+  background:#fff;border-radius:50%;
+  box-shadow:
+    0 0 6px #fff,
+    0 0 12px rgba(255,245,200,1),
+    0 0 40px 15px rgba(249,217,73,0.3);
+}
+@keyframes sha{0%{transform:rotate(155deg) translateX(0);opacity:0}4%{opacity:1}88%{opacity:1}100%{transform:rotate(155deg) translateX(200vw);opacity:0}}
+
+.sh-dust {
+  position:absolute; right:2px; top:50%; width:2px; height:2px; margin-top:-1px;
+  background:#fff; border-radius:50%;
+  box-shadow:0 0 4px #f9d949, 0 0 6px rgba(255,255,255,0.8); opacity:0;
+  animation: dust-shed linear forwards;
+}
+@keyframes dust-shed {
+  0% { transform: translate(0, 0) scale(1.2); opacity: 1; }
+  100% { transform: translate(calc(-60px - 40px * var(--rx)), calc(4px * var(--ry))) scale(0); opacity: 0; }
+}
+
+/* ============ CLOUDS ============ */
+.cld{position:absolute;pointer-events:none;animation:cldd linear infinite;opacity:.12;z-index:4;
+  filter:drop-shadow(0 2px 0 rgba(0,0,0,.4))}
+@keyframes cldd{from{transform:translateX(-340px)}to{transform:translateX(calc(115vw + 340px))}}
+
+/* ============ MOON REFLECTION ============ */
+#refl{position:absolute;z-index:12;pointer-events:none;
+  background:radial-gradient(ellipse 60% 100% at 50% 0%, rgba(249,217,73,0.45), rgba(249,217,73,0.08) 45%, transparent 75%);
+  filter:blur(4px); mix-blend-mode:screen;
+  animation:refla 5s ease-in-out infinite}
+
+#refl::before {
+  content: ''; position: absolute;
+  top: 0; left: 25%; width: 50%; height: 3px;
+  background: #fff; border-radius: 50%;
+  box-shadow: 0 2px 10px rgba(249,217,73,0.9), 0 5px 25px rgba(249,217,73,0.5);
+}
+@keyframes refla{0%,100%{opacity:.5;transform:scaleX(1)}50%{opacity:.9;transform:scaleX(1.15)}}
+
+/* ============ LAYERS ============ */
+.par{position:absolute;bottom:0;left:-5%;width:110%;will-change:transform;
+  transition:transform .25s cubic-bezier(.25,.46,.45,.94)}
+.wc{position:absolute;bottom:0;width:200%;display:flex; transform-origin: bottom; transform: scaleY(var(--wave-amp, 1)); transition: transform 0.1s linear;}
+.ws{width:50%;flex-shrink:0;animation:wss linear infinite;display:block}
+.ws.r{animation-direction:reverse}
+@keyframes wss{to{transform:translateX(-100%)}}
+
+.edge{position:absolute;left:0;right:0;height:1px;
+  background:linear-gradient(to right, transparent, rgba(255,255,255,.25), transparent);
+  opacity:.5;pointer-events:none;mix-blend-mode:screen}
+
+/* ============ DISTANT MOUNTAINS ============ */
+#mountains{position:absolute;bottom:60vh;left:0;right:0;height:80px;z-index:6;opacity:.7;
+  filter:drop-shadow(0 2px 6px rgba(0,0,0,.5))}
+
+/* ============ BOATS / WHALE / FISH ============ */
+@keyframes boatsail{from{left:-400px} to{left:calc(115vw + 400px)}}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(0deg)}33%{transform:translateY(-2px) rotate(.4deg)}67%{transform:translateY(2px) rotate(-.3deg)}}
+@keyframes bob2{0%,100%{transform:translateY(0) rotate(0deg)}33%{transform:translateY(3px) rotate(-.5deg)}67%{transform:translateY(-3px) rotate(.4deg)}}
+
+/* Animación de la ballena (Mecánica de emersión parcial) */
+#whale{position:absolute;left:30%;bottom:22vh;z-index:35;pointer-events:none;
+  animation:whbr 32s ease-in-out 4s infinite;filter:drop-shadow(0 6px 12px rgba(0,0,0,.6))}
+@keyframes whbr{
+  0%,78%,100%{opacity:0;transform:translateY(120px)}
+  83%{opacity:1;transform:translateY(35px)}
+  90%{opacity:1;transform:translateY(35px)}
+  95%{opacity:0;transform:translateY(120px)}
+}
+
+/* Animación del chorro de agua (Explosión sincronizada) */
+@keyframes spout-blow {
+  0%, 82% { opacity: 0; transform: scaleY(0.2) translateY(20px); }
+  84% { opacity: 1; transform: scaleY(1.1) translateY(0); }
+  88% { opacity: 0.9; transform: scaleY(1) translateY(0); }
+  92%, 100% { opacity: 0; transform: scaleY(0.6) translateY(-15px); }
+}
+
+#fish{position:absolute;left:22%;bottom:63px;z-index:55;pointer-events:none;
+  animation:fishj 18s ease-in-out 8s infinite;filter:drop-shadow(0 3px 4px rgba(0,0,0,.45)); --dir: 1;}
+
+/* Salto Parabólico orgánico */
+@keyframes fishj{
+  0%,82%,100%{opacity:0;transform:translate(0, 35px) rotate(calc(-45deg * var(--dir, 1))) scaleX(var(--dir, 1))}
+  87%{opacity:1;transform:translate(calc(40px * var(--dir, 1)), -70px) rotate(calc(-15deg * var(--dir, 1))) scaleX(var(--dir, 1))}
+  93%{opacity:1;transform:translate(calc(80px * var(--dir, 1)), -45px) rotate(calc(20deg * var(--dir, 1))) scaleX(var(--dir, 1))}
+  98%{opacity:0;transform:translate(calc(110px * var(--dir, 1)), 25px) rotate(calc(45deg * var(--dir, 1))) scaleX(var(--dir, 1))}
+}
+
+/* ============ BIRDS ============ */
+.flock{position:absolute;pointer-events:none;animation:flya linear infinite;opacity:.6;
+  filter:drop-shadow(0 1px 0 rgba(0,0,0,.25))}
+@keyframes flya{
+  0% {left:-160px; transform: translateY(0px);}
+  25% {transform: translateY(-12px);}
+  50% {transform: translateY(4px);}
+  75% {transform: translateY(-8px);}
+  100% {left:calc(110vw + 160px); transform: translateY(0px);}
+}
+
+/* ============ SPARKLES ============ */
+.spk{position:absolute;width:3px;height:3px;border-radius:50%;background:#f9d949;pointer-events:none;
+  animation:spkp ease-in-out infinite;filter:drop-shadow(0 0 3px rgba(249,217,73,.7))}
+@keyframes spkp{0%,100%{opacity:0;transform:scale(.3)}50%{opacity:.9;transform:scale(2)}}
+
+/* ============ LIGHTHOUSE BEAM ============ */
+#beam{
+  position:absolute;
+  z-index:0;
+  pointer-events:none;
+  right:26px;
+  bottom:116px;
+  width:500px;
+  height:140px;
+  margin-bottom:-70px;
+  transform-origin:right center;
+  background:radial-gradient(ellipse at right center, rgba(255,250,200,.4) 0%, rgba(249,217,73,.12) 40%, transparent 80%);
+  filter:blur(8px);
+  opacity:0;
+  mix-blend-mode:screen;
+  animation:beamsweep 12s ease-in-out infinite;
+}
+@keyframes beamsweep{
+  0%,100%{transform:rotate(-2deg);opacity:0}
+  25%{opacity:.6}
+  50%{transform:rotate(-28deg);opacity:.8}
+  75%{opacity:.3}
+}
+
+/* ============ TITLE ============ */
+#title{
+  position:absolute;left:6%;top:11%;
+  z-index:80;text-align:left;pointer-events:none;
+  color:#f4e7c6;max-width:38%;
+  text-shadow:0 2px 12px rgba(0,0,0,.5);
+}
+#title .pre{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-style:italic;font-weight:500;
+  letter-spacing:.5em;font-size:11px;
+  color:rgba(244,231,198,.65);
+  margin-bottom:14px;text-transform:uppercase;
+  padding-left:.5em;
+}
+#title h1{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-weight:400;font-size:54px;letter-spacing:.04em;
+  line-height:1;margin-bottom:10px;
+}
+#title h1 em{font-style:italic;color:#f4d690}
+#title .sub{
+  font-family:'Helvetica Neue',Helvetica,sans-serif;
+  font-size:10px;letter-spacing:.45em;text-transform:uppercase;
+  color:rgba(244,231,198,.55);
+}
+#title .rule{
+  width:40px;height:1px;background:rgba(244,231,198,.4);
+  margin:16px 0;
+}
+
+/* Storm mode additions */
+@keyframes lightning {
+  0%, 96%, 98%, 100% { filter: brightness(1) contrast(1); }
+  97% { filter: brightness(2.5) contrast(1.2) hue-rotate(-10deg); }
+  99% { filter: brightness(1.8) contrast(1.1); }
+}
+.rain{position:absolute;width:1px;height:14px;background:linear-gradient(to bottom, transparent, rgba(180,210,240,.65));
+  pointer-events:none;z-index:65;animation:raind linear infinite;opacity:0;transition:opacity .6s}
+@keyframes raind{from{transform:translateY(-20px)}to{transform:translateY(110vh)}}
+body.storm .rain{opacity:.7}
+body.storm #scene{
+  background:radial-gradient(ellipse 80% 60% at 52% 4%, #1a2338 0%, #12182b 30%, #080c18 60%, #020409 100%), #000;
+  animation: lightning 12s infinite;
+}
+body.storm .cld{opacity:.35; filter:drop-shadow(0 4px 2px rgba(0,0,0,0.8))}
+body.storm #moon{filter:brightness(.4) sepia(1) hue-rotate(180deg) saturate(0.5)}
+
+/* Dawn mode */
+body.dawn #scene{background:radial-gradient(ellipse 100% 100% at 50% 100%, #ff8a66 0%, #e55c68 20%, #853e77 45%, #352a5a 75%, #1a1a3a 100%)}
+body.dawn #moon{background:#fff4d0;box-shadow:inset -14px -8px 0 2px #ffe599, 0 0 50px rgba(255,200,120,.5)}
+body.dawn .aur{opacity:0 !important}
+
+/* Calm preset */
+body.calm .ws{animation-duration:calc(var(--wsd,30s) * 2) !important}

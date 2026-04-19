@@ -1,0 +1,29 @@
+:root {
+  --c-deep: #020b18;
+  --c-deeper: #071630;
+  --c-blue-1: #0e2446;
+  --c-blue-2: #153866;
+  --c-blue-3: #1d5791;
+  --c-blue-4: #2b7cba;
+  --c-blue-5: #3b8dbb;
+  --c-blue-6: #69b4d4;
+  --c-gold: #f9d949;
+  --c-gold-soft: #f4d690;
+  --c-cream: #f4e7c6;
+  --c-cream-soft: #e8e3d3;
+  --f-serif: 'Cormorant Garamond', Georgia, serif;
+  --f-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  background: var(--c-deep);
+  font-family: var(--f-sans);
+  color: var(--c-cream-soft);
+  scroll-behavior: smooth;
+}
+
+body { overflow-x: hidden; }

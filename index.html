@@ -553,35 +553,79 @@ function buildBirds(){
   });
 }
 
-/* ========== SHOOTING STARS ========== */
+/* ========== SHOOTING STARS (Motor Físico Cinemático) ========== */
 const shs = document.getElementById('shs');
-function spawnShoot(){
-  const el=document.createElement('div');
-  el.className='sh';
-  el.style.width=(Math.random()*200+400)+'px';
-  el.style.top=(Math.random()*28-4)+'%';
-  el.style.left=(Math.random()*38+58)+'%';
-  const dur=(Math.random()*6+12).toFixed(1);
-  el.style.animationDuration=dur+'s';
 
-  const numParticles = Math.floor(Math.random() * 10) + 14;
-  for(let i=0; i<numParticles; i++) {
-     const dust = document.createElement('div');
-     dust.className = 'sh-dust';
-     const sz = (Math.random() * 2.5 + 1).toFixed(1);
-     dust.style.setProperty('--rx', Math.random().toFixed(2));
-     dust.style.setProperty('--ry', (Math.random() * 2 - 1).toFixed(2));
-     dust.style.setProperty('--sz', sz + 'px');
-     dust.style.animationDuration = (Math.random() * 2 + 1.2).toFixed(1) + 's';
-     dust.style.animationDelay = (Math.random() * (dur * 0.65)).toFixed(1) + 's';
-     el.appendChild(dust);
+function spawnMagicStar() {
+  if(document.hidden) return setTimeout(spawnMagicStar, 1000);
+
+  let x = window.innerWidth * (0.5 + Math.random() * 0.6);
+  let y = window.innerHeight * -0.1;
+
+  let vx = -(Math.random() * 1.5 + 1.5);
+  let vy = Math.random() * 1 + 0.5;
+  let gravity = 0.025;
+
+  const head = document.createElement('div');
+  head.className = 'm-star-head';
+  const glow = document.createElement('div');
+  glow.className = 'm-star-glow';
+
+  shs.appendChild(glow);
+  shs.appendChild(head);
+
+  let isAlive = true;
+
+  function step() {
+    if(!isAlive) return;
+
+    vy += gravity;
+    x += vx;
+    y += vy;
+
+    head.style.left = x + 'px';
+    head.style.top  = y + 'px';
+    glow.style.left = x + 'px';
+    glow.style.top  = y + 'px';
+
+    if(Math.random() < 0.7) {
+      const p = document.createElement('div');
+      const isStar = Math.random() < 0.3;
+      p.className = 'm-part ' + (isStar ? 'star' : 'dot');
+
+      const spread = isStar ? 30 : 15;
+      p.style.left = (x + (Math.random() - 0.5) * spread) + 'px';
+      p.style.top  = (y + (Math.random() - 0.5) * spread) + 'px';
+
+      const size = isStar ? (Math.random() * 12 + 6) : (Math.random() * 4 + 2);
+      p.style.width  = size + 'px';
+      p.style.height = size + 'px';
+      p.style.marginLeft = -(size/2) + 'px';
+      p.style.marginTop  = -(size/2) + 'px';
+
+      const dur = Math.random() * 2 + 1.5;
+      p.style.animationDuration = dur + 's';
+
+      if(isStar && Math.random() < 0.5) p.style.background = '#cceeff';
+
+      shs.appendChild(p);
+      setTimeout(() => { if(p.parentNode) p.remove(); }, dur * 1000);
+    }
+
+    if(y > window.innerHeight + 100 || x < -100) {
+      isAlive = false;
+      head.remove();
+      glow.remove();
+    } else {
+      requestAnimationFrame(step);
+    }
   }
 
-  shs.appendChild(el);
-  setTimeout(()=>el.remove(),dur*1000);
-  setTimeout(spawnShoot, Math.random()*14000 + 8000);
+  requestAnimationFrame(step);
+  setTimeout(spawnMagicStar, Math.random() * 10000 + 8000);
 }
-setTimeout(spawnShoot, 1500);
+
+setTimeout(spawnMagicStar, 2000);
 
 /* ========== RAIN (storm) ========== */
 const rainC = document.getElementById('rain-container');

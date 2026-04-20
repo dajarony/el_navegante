@@ -742,7 +742,10 @@ window.__applyScene = applyScene;
 
 applyScene(state.scene);
 applyWaves(state.waves);
-applyWaveSize(state.wave_size);
+const waveSizeInit = window.innerWidth <= 640 ? 1.5 : 0.45;
+state.wave_size = waveSizeInit;
+document.getElementById('r-wave-size').value = waveSizeInit;
+applyWaveSize(waveSizeInit);
 applyLighthouseY(state.lh_y);
 applyBoatY(state.boat_y);
 applyGalleonY(state.galleon_y);

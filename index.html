@@ -359,6 +359,10 @@
     <input type="range" id="r-galleon-y" min="-10" max="60" step="1" value="34">
   </div>
 
+  <div class="row"><label>Altura barco lejano</label>
+    <input type="range" id="r-distant-y" min="-10" max="60" step="1" value="32">
+  </div>
+
   <div class="row"><label>Altura ballena</label>
     <input type="range" id="r-whale-y" min="-10" max="60" step="1" value="22">
   </div>
@@ -407,13 +411,14 @@ const TWEAK_DEFAULTS = {
   "boat_y": 32,
   "galleon_y": 34,
   "whale_y": 22,
+  "distant_boat_y": 32,
   "stars": 90,
   "parallax": 0.1,
   "grain": 0.3,
   "show_title": true,
   "show_lighthouse": true,
   "show_boat": true,
-  "show_whale": false,
+  "show_whale": true,
   "show_fish": true,
   "show_birds": true,
   "show_mountains": false,
@@ -687,6 +692,9 @@ function applyGalleonY(v){
   const galleon = document.getElementById('horizon-galleon');
   if(galleon) galleon.style.bottom = v + 'vh';
 }
+function applyDistantBoatY(v){
+  document.querySelectorAll('.distant-boat').forEach(b => b.style.bottom = v + 'vh');
+}
 function applyWhaleY(v){
   const whale = document.getElementById('whale');
   if(whale) whale.style.bottom = v + 'vh';
@@ -739,6 +747,7 @@ applyLighthouseY(state.lh_y);
 applyBoatY(state.boat_y);
 applyGalleonY(state.galleon_y);
 applyWhaleY(state.whale_y);
+applyDistantBoatY(state.distant_boat_y);
 applyParallax(state.parallax);
 applyGrain(state.grain);
 Object.entries({
@@ -761,6 +770,9 @@ document.getElementById('r-boat-y').addEventListener('input',e=>{
 });
 document.getElementById('r-galleon-y').addEventListener('input',e=>{
   state.galleon_y = parseFloat(e.target.value); applyGalleonY(state.galleon_y); persist();
+});
+document.getElementById('r-distant-y').addEventListener('input',e=>{
+  state.distant_boat_y = parseFloat(e.target.value); applyDistantBoatY(state.distant_boat_y); persist();
 });
 document.getElementById('r-whale-y').addEventListener('input',e=>{
   state.whale_y = parseFloat(e.target.value); applyWhaleY(state.whale_y); persist();
@@ -810,7 +822,7 @@ window.parent.postMessage({type:'__edit_mode_available'}, '*');
 function persist(){
   window.parent.postMessage({type:'__edit_mode_set_keys', edits:{
     scene:state.scene, waves:state.waves, wave_size:state.wave_size, lh_y:state.lh_y,
-    boat_y:state.boat_y, galleon_y:state.galleon_y, whale_y:state.whale_y, stars:state.stars,
+    boat_y:state.boat_y, galleon_y:state.galleon_y, whale_y:state.whale_y, distant_boat_y:state.distant_boat_y, stars:state.stars,
     parallax:state.parallax, grain:state.grain,
     show_title:state.show_title, show_lighthouse:state.show_lighthouse,
     show_boat:state.show_boat, show_whale:state.show_whale,

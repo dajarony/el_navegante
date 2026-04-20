@@ -276,6 +276,7 @@
   <div id="spkw" style="position:absolute;inset:0;z-index:56;pointer-events:none"></div>
   <div id="brd" style="position:absolute;inset:0;z-index:70;pointer-events:none"></div>
   <div id="rain-container" style="position:absolute;inset:0;pointer-events:none;z-index:65"></div>
+  <div id="snow-container" style="position:absolute;inset:0;pointer-events:none;z-index:66;overflow:hidden"></div>
   <div id="vignette"></div>
   <div id="grain"></div>
 </div>
@@ -313,6 +314,14 @@
     <p style="margin-top:16px">If the night taught me to listen, the morning is teaching me to speak.</p>
   </section>
 
+  <section id="winter" class="chapter" data-scene="winter">
+    <div class="chapter-label">Chapter IV · The Winter</div>
+    <h2>The <em>silence</em> of snow</h2>
+    <div class="rule"></div>
+    <p>There is a kind of clarity that only comes in winter. When the noise dies down, when the sea grows still beneath the ice, and the only sound is the fall of something soft and white.</p>
+    <p style="margin-top:16px">I build in those moments. Quietly. Carefully. One flake at a time.</p>
+  </section>
+
   <section id="signal" class="chapter" data-scene="dawn">
     <div class="chapter-label">Chapter IV · The Lighthouse</div>
     <h2>Leave a <em>signal</em></h2>
@@ -335,6 +344,7 @@
     <div class="seg" id="seg-scene">
       <button data-s="night" class="act">Noche</button>
       <button data-s="dawn">Alba</button>
+      <button data-s="winter">Nieve</button>
       <button data-s="storm">Tormenta</button>
     </div>
   </div>
@@ -705,17 +715,38 @@ function applyStars(n){
 }
 function applyParallax(v){ parMul = v; }
 function applyGrain(v){ document.getElementById('grain').style.opacity = v; }
+function buildSnow(){
+  const snowC = document.getElementById('snow-container');
+  if(!snowC) return;
+  snowC.innerHTML = '';
+  for(let i=0; i<150; i++){
+    const s = document.createElement('div');
+    s.className = 'snw';
+    s.style.left = (Math.random()*100)+'%';
+    s.style.top = (-Math.random()*40)+'%';
+    const size = Math.random()*3+1.5;
+    s.style.width = size+'px';
+    s.style.height = size+'px';
+    s.style.animationDuration = (Math.random()*6+6).toFixed(2)+'s';
+    s.style.animationDelay = '-'+(Math.random()*10).toFixed(2)+'s';
+    s.style.setProperty('--drift',(Math.random()*120-60)+'px');
+    snowC.appendChild(s);
+  }
+}
+
 function applyScene(s){
-  document.body.classList.remove('dawn','storm','calm');
-  if(s==='dawn') document.body.classList.add('dawn');
-  if(s==='storm') document.body.classList.add('storm');
+  document.body.classList.remove('dawn','storm','winter');
+  if(s==='dawn')   document.body.classList.add('dawn');
+  if(s==='storm')  document.body.classList.add('storm');
+  if(s==='winter') { document.body.classList.add('winter'); buildSnow(); }
   document.querySelectorAll('#seg-scene button').forEach(b=>{
     b.classList.toggle('act', b.dataset.s===s);
   });
   const sub = document.querySelector('#title .sub');
   if(sub){
-    sub.textContent = s==='dawn' ? 'Amanecer · Horizonte cálido · Brisa'
-                    : s==='storm' ? 'Tormenta · Lluvia · Mar inquieto'
+    sub.textContent = s==='dawn'   ? 'Amanecer · Horizonte cálido · Brisa'
+                    : s==='storm'  ? 'Tormenta · Lluvia · Mar inquieto'
+                    : s==='winter' ? 'Invierno · Nieve · Mar en calma'
                     : 'Noche · Luna llena · Mar en calma';
   }
 }

@@ -264,3 +264,30 @@ body.dawn .aur{opacity:0 !important}
 
 /* Calm preset */
 body.calm .ws{animation-duration:calc(var(--wsd,30s) * 2) !important}
+
+/* ============ SNOW ============ */
+#snow-container{display:none}
+body.winter #snow-container{display:block}
+body.winter #rain-container{display:none}
+
+.snw{
+  position:absolute;background:#fff;border-radius:50%;
+  pointer-events:none;z-index:66;
+  animation:snowd linear infinite;
+  box-shadow:0 0 6px rgba(255,255,255,0.8);
+  opacity:0.85;
+}
+@keyframes snowd{
+  from{transform:translateY(-10vh) translateX(0)}
+  to{transform:translateY(110vh) translateX(var(--drift))}
+}
+
+/* Winter scene */
+body.winter #scene{
+  background:radial-gradient(ellipse 80% 60% at 52% 4%, #1c3248 0%, #0e1e30 30%, #060e1c 60%, #020810 100%), #020810;
+}
+body.winter #moon{
+  background:#e8f4ff;
+  box-shadow:inset -14px -8px 0 2px #d0e8ff, 0 0 60px rgba(180,220,255,0.5);
+}
+body.winter .aur{opacity:0.3;filter:hue-rotate(160deg)}

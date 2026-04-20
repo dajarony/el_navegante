@@ -719,7 +719,7 @@ function buildSnow(){
   const snowC = document.getElementById('snow-container');
   if(!snowC) return;
   snowC.innerHTML = '';
-  for(let i=0; i<150; i++){
+  for(let i=0; i<110; i++){
     const s = document.createElement('div');
     s.className = 'snw';
     s.style.left = (Math.random()*100)+'%';
@@ -731,6 +731,20 @@ function buildSnow(){
     s.style.animationDelay = '-'+(Math.random()*10).toFixed(2)+'s';
     s.style.setProperty('--drift',(Math.random()*120-60)+'px');
     snowC.appendChild(s);
+  }
+  for(let i=0; i<40; i++){
+    const f = document.createElement('div');
+    f.className = 'flake';
+    f.style.left = (Math.random()*100)+'%';
+    f.style.top = (-Math.random()*40)+'%';
+    const size = Math.random()*8+6;
+    f.style.width = size+'px';
+    f.style.height = size+'px';
+    f.style.animationDuration = (Math.random()*8+8).toFixed(2)+'s';
+    f.style.animationDelay = '-'+(Math.random()*12).toFixed(2)+'s';
+    f.style.setProperty('--drift',(Math.random()*160-80)+'px');
+    f.style.setProperty('--rot',(Math.random()*360+180)+'deg');
+    snowC.appendChild(f);
   }
 }
 

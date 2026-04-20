@@ -5,8 +5,9 @@
   z-index: 50;
   overflow-y: scroll;
   overflow-x: hidden;
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: y proximity;
   scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
 
 #story::-webkit-scrollbar { width: 3px; }
